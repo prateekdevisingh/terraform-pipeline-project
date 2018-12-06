@@ -17,12 +17,17 @@ pipeline {
         }
         stage('plan') {
             steps {
-                sh  'terraform plan -no-color -out=create.tfplan'   
+                sh  'terraform plan --out plan'
+                script {
+                  timeout(time: 10, unit: 'MINUTES') {
+                    input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
+                  }
+                }
             }
         }
         stage('apply') {
             steps {
-                sh  'terraform apply -no-color -out=create.tfplan'
+                sh  'terraform apply plan'
 }
         }
     }
