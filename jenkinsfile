@@ -1,7 +1,7 @@
 pipeline {
     agent {
         node {
-            label 'master'
+            label 'terraform-pipeline-node'
         }
     }
 environment {
