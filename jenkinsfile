@@ -22,16 +22,12 @@ environment {
         }
         stage('init') {
             steps {
-                sh  """
-                    ${TERRAFORM_CMD} init -backend=true -input=false
-                    """
+                sh  'terraform init -backend=true -input=false'
             }
         }
         stage('plan') {
             steps {
-                sh  """
-                    ${TERRAFORM_CMD} plan -out=tfplan -input=false 
-                    """
+                sh  'terraform plan -backend=true -input=false'
                 script {
                   timeout(time: 10, unit: 'MINUTES') {
                     input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
