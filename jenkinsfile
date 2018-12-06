@@ -17,7 +17,7 @@ pipeline {
         }
         stage('plan') {
             steps {
-                sh  'terraform plan'
+                sh  'terraform plan -input=false'
                 script {
                   timeout(time: 10, unit: 'MINUTES') {
                     input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
@@ -27,7 +27,7 @@ pipeline {
         }
         stage('apply') {
             steps {
-                sh  'terraform apply'
+                sh  'terraform apply -input=false'
 }
         }
     }
